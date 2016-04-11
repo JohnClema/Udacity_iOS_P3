@@ -24,6 +24,7 @@
 		058C756D1CBAC51900140535 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C756C1CBAC51900140535 /* BorderedButton.swift */; };
 		058C75701CBB9CA000140535 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C756F1CBB9CA000140535 /* UdacityConvenience.swift */; };
 		058C75721CBBA05800140535 /* UdacitySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C75711CBBA05800140535 /* UdacitySignupViewController.swift */; };
+		058C75741CBC036D00140535 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C75731CBC036D00140535 /* ParseConvenience.swift */; };
 		05BB5BF11CB76C1B00B651EE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BB5BF01CB76C1B00B651EE /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		058C756C1CBAC51900140535 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		058C756F1CBB9CA000140535 /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
 		058C75711CBBA05800140535 /* UdacitySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacitySignupViewController.swift; sourceTree = "<group>"; };
+		058C75731CBC036D00140535 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		05BB5BF01CB76C1B00B651EE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,10 +99,10 @@
 		057958821CB798EA00D79492 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				054A2E571C9937D300F33137 /* LoginViewController.swift */,
 				05BB5BF01CB76C1B00B651EE /* MapViewController.swift */,
 				054A2E5B1C9937E900F33137 /* ListViewController.swift */,
 				054A2E471C9935D400F33137 /* ViewController.swift */,
-				054A2E571C9937D300F33137 /* LoginViewController.swift */,
 				058C75711CBBA05800140535 /* UdacitySignupViewController.swift */,
 			);
 			name = "View Controllers";
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				058C75621CBAB16900140535 /* ParseClient.swift */,
+				058C75731CBC036D00140535 /* ParseConvenience.swift */,
 				058C75661CBABEBF00140535 /* ParseConstants.swift */,
 			);
 			name = Parse;
@@ -223,6 +226,7 @@
 				054A2E461C9935D400F33137 /* AppDelegate.swift in Sources */,
 				05BB5BF11CB76C1B00B651EE /* MapViewController.swift in Sources */,
 				058C75601CBAB0A200140535 /* UdacityClient.swift in Sources */,
+				058C75741CBC036D00140535 /* ParseConvenience.swift in Sources */,
 				058C756D1CBAC51900140535 /* BorderedButton.swift in Sources */,
 				058C75691CBAC05100140535 /* UIUpdatesOnMain.swift in Sources */,
 				058C75721CBBA05800140535 /* UdacitySignupViewController.swift in Sources */,

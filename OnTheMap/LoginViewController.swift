@@ -15,17 +15,27 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
     
-    
+    var studentLocations : [StudentInformation]?
     
     @IBAction func login(sender: AnyObject) {
+        //Create a session with the udacity client using the username and password
         UdacityClient.sharedInstance().createSession(emailTextField.text!, password: passwordTextField.text!, completionHandlerForSession: { (success, accountID, errorString) in
-            performUIUpdatesOnMain {
                 if success {
-                    self.finishLogin()
+                    //Using the returned accountID - update all the student locations
+                    ParseClient.sharedInstance().getStudentLocations(accountID!, completionHandlerForStudentLocations: { (success, studentLocations, errorString) in
+                        if success {
+                            self.studentLocations = studentLocations!
+                            performUIUpdatesOnMain {
+                                self.finishLogin()
+                            }
+                        } else {
+                            self.displayError(errorString!)
+                        }
+                    })
+                    
                 } else {
                     self.displayError(errorString!)
                 }
-            }
         });
     }
     
@@ -38,11 +48,9 @@ class LoginViewController: UIViewController {
         
     }
     
-    private func finishLogin() {
+    func finishLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
         presentViewController(controller, animated: true, completion: nil)
-
-
     }
     
     private func displayError(error: String) {

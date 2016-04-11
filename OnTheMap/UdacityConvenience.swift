@@ -34,19 +34,6 @@ extension UdacityClient {
                 }
             }
         }
-        
-//        print(username)
-//        print(password)
-//        
-//        let session = NSURLSession.sharedSession()
-//        let task = session.dataTaskWithRequest(request) { data, response, error in
-//            if error != nil { // Handle error…
-//                print(error?.localizedDescription)
-//                return
-//            }
-//            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-//        }
-//        task.resume()
     }
     
     

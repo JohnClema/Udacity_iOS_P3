@@ -16,6 +16,8 @@ class UdacityClient : NSObject {
      * For all responses from the udacity API, you will need to skip the first 5 characters of the
      * response
      */
+    var sessionId : String?
+    var accountId : String?
     
     func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
@@ -107,7 +109,6 @@ class UdacityClient : NSObject {
             }
             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
