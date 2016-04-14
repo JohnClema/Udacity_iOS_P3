@@ -15,6 +15,8 @@ class ParseClient : NSObject {
     var sessionId : String?
     var accountId : String?
     
+    var studentLocations : [StudentInformation]?
+    
     func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         var params = parameters
@@ -24,7 +26,8 @@ class ParseClient : NSObject {
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(parameters, withPathExtension: method))
-        
+        request.addValue(ParseClient.Constants.AppId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseClient.Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
@@ -72,6 +75,8 @@ class ParseClient : NSObject {
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(params, withPathExtension: method))
+        request.addValue(ParseClient.Constants.AppId, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseClient.Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -104,9 +109,8 @@ class ParseClient : NSObject {
                 return
             }
             
-            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
         /* 7. Start the request */
@@ -145,9 +149,9 @@ class ParseClient : NSObject {
     private func udacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         
         let components = NSURLComponents()
-        components.scheme = UdacityClient.Constants.ApiScheme
-        components.host = UdacityClient.Constants.ApiHost
-        components.path = UdacityClient.Constants.ApiPath + (withPathExtension ?? "")
+        components.scheme = ParseClient.Constants.ApiScheme
+        components.host = ParseClient.Constants.ApiHost
+        components.path = ParseClient.Constants.ApiPath + (withPathExtension ?? "")
         components.queryItems = [NSURLQueryItem]()
         
         for (key, value) in parameters {

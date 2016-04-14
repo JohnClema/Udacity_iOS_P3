@@ -15,45 +15,58 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
     
-    var studentLocations : [StudentInformation]?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        emailTextField.delegate = TextFieldDelegate()
+        passwordTextField.delegate = TextFieldDelegate()
+    }
     
     @IBAction func login(sender: AnyObject) {
         //Create a session with the udacity client using the username and password
-        UdacityClient.sharedInstance().createSession(emailTextField.text!, password: passwordTextField.text!, completionHandlerForSession: { (success, accountID, errorString) in
+        guard let emailText = emailTextField.text where !emailText.isEmpty else {
+            performUIUpdatesOnMain {
+                self.presentAlertController("No Email Provided", message: "Please enter an email address", presentingController: self, completion: nil)
+            }
+            return
+        }
+        
+        guard let passwordText = passwordTextField.text where !passwordText.isEmpty else {
+            performUIUpdatesOnMain {
+                self.presentAlertController("No Password Provided", message: "Please enter a password", presentingController: self, completion: nil)
+            }
+            return
+        }
+        
+        UdacityClient.sharedInstance().createSession(emailTextField.text!, password: passwordTextField.text!, completionHandlerForSession: { (success, accountID, error) in
                 if success {
-                    //Using the returned accountID - update all the student locations
-                    ParseClient.sharedInstance().getStudentLocations(accountID!, completionHandlerForStudentLocations: { (success, studentLocations, errorString) in
-                        if success {
-                            self.studentLocations = studentLocations!
-                            performUIUpdatesOnMain {
-                                self.finishLogin()
-                            }
-                        } else {
-                            self.displayError(errorString!)
-                        }
-                    })
-                    
+                    UdacityClient.sharedInstance().accountId = accountID
+                    performUIUpdatesOnMain {
+                        self.finishLogin()
+                    }
                 } else {
-                    self.displayError(errorString!)
+                    performUIUpdatesOnMain {
+                        self.presentAlertController("Login Error", message: (error?.localizedDescription)!, presentingController: self, completion: nil)
+                    }
                 }
         });
     }
-    
     
     @IBAction func signup(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: UdacityClient.Constants.SignupURL)!)
     }
     
+    
+    //TODO: Implement LoginWithFacebook
     @IBAction func loginWithFacebook(sender: AnyObject) {
         
     }
     
-    func finishLogin() {
+    private func finishLogin() {
+        emailTextField.text = ""
+        passwordTextField.text = ""
         let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
         presentViewController(controller, animated: true, completion: nil)
     }
     
-    private func displayError(error: String) {
-        
-    }
 }

@@ -98,7 +98,14 @@ class UdacityClient : NSObject {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
+                let code = (response as? NSHTTPURLResponse)?.statusCode
+                if code == 403 {
+                    sendError("You entered the wrong username or password, please try again.")
+                } else if code >= 500 && code <= 599 {
+                    sendError("Apologies, there was an unexpected server error")
+                } else {
+                    sendError("Sorry, there was an unexpected error, please contact me at hello@johnclema.me to send feedback.")
+                }
                 return
             }
             

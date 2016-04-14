@@ -9,15 +9,12 @@
 extension UdacityClient {
     
     struct Constants {
-        // MARK: API Key
-//        static let ApiKey : String = "4e8bdccc3bb63cefbec21f936eca5651"
         
         // MARK: URLs
         static let ApiScheme = "https"
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
         static let SignupURL = "https://www.udacity.com/account/auth#!/signup"
-
     }
     
     struct Methods {
@@ -40,5 +37,15 @@ extension UdacityClient {
         static let Key = "key"
     }
     
+    struct ErrorTitles {
+        static let WrongPassword = "Incorrect Password"
+        static let WrongUsername = "Incorrect Username"
+        static let FailureToConnect = "Failure to Connect"
+    }
     
+    struct ErrorMessages {
+        static let WrongPassword = "Please enter a valid password"
+        static let WrongUsername = "Please enter a valid username"
+        static let FailureToConnect = "Failure to Connect to api"
+    }
 }
