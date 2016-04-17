@@ -11,18 +11,20 @@ import Foundation
 struct StudentInformation {
     
     let objectId: String
-//    let uniqueKey: String? //Populate with user's Udacity ID
+    var uniqueKey: String? //Populate with user's Udacity ID
     let firstName: String
     let lastName: String
-    let mapString: String
-    let mediaURL: String
-    let latitude: NSNumber
-    let longitude: NSNumber
+    var mapString: String
+    var mediaURL: String
+    var latitude: NSNumber
+    var longitude: NSNumber
     
     //NB: There are also createdAt and updatedAt date types, and the access control list, ACL that were ommitted
     init(dictionary: [String: AnyObject]) {
         objectId = dictionary[ParseClient.ResponseKeys.ObjectID] as! String
-//        uniqueKey = UdacityClient
+        if let key = dictionary[ParseClient.ResponseKeys.UniqueKey] as? String {
+            uniqueKey = key
+        }
         firstName = dictionary[ParseClient.ResponseKeys.FirstName] as! String
         lastName = dictionary[ParseClient.ResponseKeys.LastName] as! String
         mapString = dictionary[ParseClient.ResponseKeys.MapString] as! String

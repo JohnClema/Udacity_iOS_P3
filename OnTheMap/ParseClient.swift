@@ -19,10 +19,8 @@ class ParseClient : NSObject {
     
     func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        var params = parameters
-        
         /* 1. Set the parameters */
-        
+        var params = parameters
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(parameters, withPathExtension: method))
@@ -70,8 +68,6 @@ class ParseClient : NSObject {
         
         /* 1. Set the parameters */
         var params = parameters
-        //        parameters[ParameterKeys.Username] =
-        //        parameters[ParameterKeys.Password] =
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: udacityURLFromParameters(params, withPathExtension: method))

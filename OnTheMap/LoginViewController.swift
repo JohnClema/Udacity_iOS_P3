@@ -15,11 +15,31 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        gradientLayer()
+        textfieldSetup()
         emailTextField.delegate = TextFieldDelegate()
         passwordTextField.delegate = TextFieldDelegate()
+    }
+    
+    private func textfieldSetup() {
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+
+    }
+    
+    private func gradientLayer() {
+        let gradient = CAGradientLayer()
+        gradient.frame = self.view.bounds
+        gradient.colors = [StyleConstants.Udacity.primaryOrange.CGColor as CGColorRef, StyleConstants.Udacity.secondaryOrange.CGColor as CGColorRef]
+        gradient.locations = [0.0, 1.0]
+        self.view.layer.insertSublayer(gradient, atIndex: 0)
     }
     
     @IBAction func login(sender: AnyObject) {
@@ -58,10 +78,6 @@ class LoginViewController: UIViewController {
     
     
     //TODO: Implement LoginWithFacebook
-    @IBAction func loginWithFacebook(sender: AnyObject) {
-        
-    }
-    
     private func finishLogin() {
         emailTextField.text = ""
         passwordTextField.text = ""

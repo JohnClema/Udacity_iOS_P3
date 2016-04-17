@@ -14,6 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        UILabel.appearance().font = UIFont(name: "Roboto-Regular", size: 17)
+
+
         // Override point for customization after application launch.
         return true
     }

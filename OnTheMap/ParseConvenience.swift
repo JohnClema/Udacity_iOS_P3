@@ -29,21 +29,23 @@ extension ParseClient {
         }
     }
     
-    func postUserLocation() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
-                return
+    func postUserLocation(studentLocation: StudentInformation, completionHandlerForLocationPost: (success: Bool, error: NSError?) -> Void) {
+        
+        let parameters = ["":""]
+        let jsonBody = "{\"uniqueKey\": \"\(studentLocation.uniqueKey!)\", \"firstName\": \"\(studentLocation.firstName)\", \"lastName\": \"\(studentLocation.lastName)\",\"mapString\": \"\(studentLocation.mapString)\", \"mediaURL\": \"\(studentLocation.mediaURL)\",\"latitude\": \(studentLocation.latitude.doubleValue), \"longitude\":\(studentLocation.longitude.doubleValue)}"
+        
+        taskForPOSTMethod(ParseClient.Methods.Locations, parameters:parameters , jsonBody: jsonBody) { (result, error) in
+            if let error = error {
+                completionHandlerForLocationPost(success: false, error: error)
+            } else {
+                if result != nil {
+                    completionHandlerForLocationPost(success: true, error: nil)
+
+                } else {
+                    completionHandlerForLocationPost(success: false, error: error)
+                }
             }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
         }
-        task.resume()
     }
     
 }

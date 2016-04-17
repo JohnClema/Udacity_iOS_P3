@@ -14,6 +14,7 @@ class MapViewController : UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     var activityIndicator : UIActivityIndicatorView?
+    var mapViewDelegate = MapViewDelegate()
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -24,8 +25,6 @@ class MapViewController : UIViewController {
         let logoutButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MapViewController.logout))
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(MapViewController.requestLocations))
         
-        
-        
         parentViewController!.navigationItem.rightBarButtonItems = [refreshButton, pinButton()]
         parentViewController!.navigationItem.leftBarButtonItem = logoutButton
         
@@ -33,7 +32,7 @@ class MapViewController : UIViewController {
         //Start Activity Indicator
         
         //Request map locations
-        mapView.delegate = MapViewDelegate()
+        mapView.delegate = mapViewDelegate
         requestLocations()
         
         //Add bar button items
@@ -84,8 +83,10 @@ class MapViewController : UIViewController {
             let locations = ParseClient.sharedInstance().studentLocations
             
             for location in locations! {
-                let lat = CLLocationDegrees(location.longitude.doubleValue)
-                let long = CLLocationDegrees(location.latitude.doubleValue)
+                let lat = CLLocationDegrees(location.latitude.doubleValue)
+
+                let long = CLLocationDegrees(location.longitude.doubleValue)
+                
                 let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
                 
                 
@@ -119,9 +120,28 @@ class MapViewController : UIViewController {
     }
     func addUserPin() {
         //If user has posted a pin - present alertview with "overwrite" and "Cancel" options
-        //
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("InformationPostingController") as! InformationPostingViewController
-        presentViewController(controller, animated: true, completion: nil)
-
+        //TODO: Fix up the logic in this code
+        var loggedinUser : StudentInformation?
+        for user in ParseClient.sharedInstance().studentLocations! {
+            if user.uniqueKey == UdacityClient.sharedInstance().accountId {
+                loggedinUser = user
+                break
+            }
+        }
+        if loggedinUser != nil {
+            self.presentAlertControllerWithOverwrite("User \"\(loggedinUser!.firstName) \(loggedinUser!.lastName)\" has already posted a student location. Would you like to overwrite their location?", presentingController: self, overwriteAction: { (action) in
+                performUIUpdatesOnMain {
+                    self.presentInformationPostingController(loggedinUser)
+                }
+                }, completion: nil)
+        } else {
+            self.presentInformationPostingController(nil)
+        }
+    }
+    
+    func presentInformationPostingController(user: StudentInformation?) {
+        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingController") as! InformationPostingViewController
+        controller.user = user!
+        self.presentViewController(controller, animated: true, completion: nil)
     }
 }

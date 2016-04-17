@@ -10,6 +10,7 @@ import MapKit
 
 class MapViewDelegate : NSObject, MKMapViewDelegate {
 
+    //This delegate method returns red pins with a detail disclosure view
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
@@ -19,7 +20,7 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinColor = .Red
+            pinView!.pinTintColor = UIColor.redColor()
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else {
@@ -38,5 +39,5 @@ class MapViewDelegate : NSObject, MKMapViewDelegate {
                 app.openURL(NSURL(string: toOpen)!)
             }
         }
-}
+    }
 }

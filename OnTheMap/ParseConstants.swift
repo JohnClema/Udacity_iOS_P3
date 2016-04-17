@@ -25,6 +25,7 @@ extension ParseClient {
     struct ResponseKeys {
         static let Results = "results"
         static let ObjectID = "objectId"
+        static let UniqueKey = "uniqueKey"
         static let FirstName = "firstName"
         static let LastName = "lastName"
         static let MapString = "mapString"

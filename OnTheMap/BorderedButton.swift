@@ -15,8 +15,6 @@ class BorderedButton: UIButton {
     // MARK: Properties
     
     // constants for styling and configuration
-    let darkerBlue = UIColor(red: 0.0, green: 0.298, blue: 0.686, alpha:1.0)
-    let lighterBlue = UIColor(red: 0.0, green:0.502, blue:0.839, alpha: 1.0)
     let titleLabelFontSize: CGFloat = 17.0
     let borderedButtonHeight: CGFloat = 44.0
     let borderedButtonCornerRadius: CGFloat = 4.0
@@ -40,9 +38,9 @@ class BorderedButton: UIButton {
     private func themeBorderedButton() {
         layer.masksToBounds = true
         layer.cornerRadius = borderedButtonCornerRadius
-        highlightedBackingColor = darkerBlue
-        backingColor = lighterBlue
-        backgroundColor = lighterBlue
+        highlightedBackingColor = StyleConstants.Udacity.highlightOrange
+        backingColor = StyleConstants.Udacity.secondaryOrange
+        backgroundColor = StyleConstants.Udacity.primaryOrange
         setTitleColor(UIColor.whiteColor(), forState: .Normal)
         titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
     }

@@ -9,16 +9,17 @@
 import UIKit
 
 class ListViewController : UIViewController {
-    var activityIndicator = UIActivityIndicatorView()
     
     var studentLocations = [StudentInformation]()
     
+    var activityIndicator : UIActivityIndicatorView?
+
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let logoutButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MapViewController.logout))
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(MapViewController.requestLocations))
+        let logoutButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ListViewController.logout))
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(ListViewController.requestLocations))
         
         parentViewController!.navigationItem.rightBarButtonItems = [refreshButton, pinButton()]
         parentViewController!.navigationItem.leftBarButtonItem = logoutButton
@@ -48,11 +49,36 @@ class ListViewController : UIViewController {
         }
     }
     
+    func requestLocations() {
+        if activityIndicator == nil {
+            activityIndicator = UIActivityIndicatorView()
+            activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+            activityIndicator!.center = self.view.center;
+            self.activityIndicator?.startAnimating()
+            self.tableView.addSubview(activityIndicator!)
+        } else {
+            self.activityIndicator?.startAnimating()
+        }
+        ParseClient.sharedInstance().getStudentLocations(UdacityClient.sharedInstance().accountId!, completionHandlerForStudentLocations: { (success, studentLocations, error) in
+            if success {
+                ParseClient.sharedInstance().studentLocations = studentLocations
+                performUIUpdatesOnMain {
+                    self.activityIndicator!.stopAnimating()
+                    self.tableView.reloadData()
+                }
+            } else {
+                performUIUpdatesOnMain {
+                    self.presentAlertController("Error requesting locations", message: (error?.localizedDescription)!, presentingController: self, completion: nil)
+                }
+            }
+        })
+    }
+    
     func pinButton() -> UIBarButtonItem {
         let btnName = UIButton()
         btnName.setImage(UIImage(named: "pin"), forState: .Normal)
         btnName.frame = CGRectMake(0, 0, 30, 30)
-        //        btnName.addTarget(self, action: #selector(), forControlEvents: .TouchUpInside)
+        btnName.addTarget(self, action: #selector(ListViewController.addUserPin), forControlEvents: .TouchUpInside)
         
         //.... Set Right/Left Bar Button item
         let rightBarButton = UIBarButtonItem()
@@ -73,6 +99,13 @@ class ListViewController : UIViewController {
                 })
             }
         })
+    }
+    func addUserPin() {
+        //If user has posted a pin - present alertview with "overwrite" and "Cancel" options
+        //
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("InformationPostingController") as! InformationPostingViewController
+        presentViewController(controller, animated: true, completion: nil)
+        
     }
 
 }

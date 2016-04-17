@@ -26,6 +26,11 @@
 		058C75761CBC9F9500140535 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C75751CBC9F9500140535 /* AlertController.swift */; };
 		058C75781CBD0E7D00140535 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C75771CBD0E7D00140535 /* MapViewDelegate.swift */; };
 		058C757B1CBD40F100140535 /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C757A1CBD40F100140535 /* InformationPostingViewController.swift */; };
+		058C757D1CC0D91100140535 /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C757C1CC0D91100140535 /* StyleConstants.swift */; };
+		058C75811CC0E08800140535 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 058C757E1CC0E08800140535 /* Roboto-Medium.ttf */; };
+		058C75821CC0E08800140535 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 058C757F1CC0E08800140535 /* Roboto-Regular.ttf */; };
+		058C75831CC0E08800140535 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 058C75801CC0E08800140535 /* Roboto-Thin.ttf */; };
+		058C75861CC0E48400140535 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C75851CC0E48400140535 /* TextField.swift */; };
 		05BB5BF11CB76C1B00B651EE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BB5BF01CB76C1B00B651EE /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +56,11 @@
 		058C75751CBC9F9500140535 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		058C75771CBD0E7D00140535 /* MapViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		058C757A1CBD40F100140535 /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
+		058C757C1CC0D91100140535 /* StyleConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
+		058C757E1CC0E08800140535 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		058C757F1CC0E08800140535 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		058C75801CC0E08800140535 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		058C75851CC0E48400140535 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		05BB5BF01CB76C1B00B651EE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +94,7 @@
 		054A2E441C9935D400F33137 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				058C75841CC0E08B00140535 /* Fonts */,
 				058C75791CBD0EC700140535 /* Util */,
 				058C755E1CBAB08800140535 /* Views */,
 				058C755D1CBAB08100140535 /* Models */,
@@ -122,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				058C756C1CBAC51900140535 /* BorderedButton.swift */,
+				058C75851CC0E48400140535 /* TextField.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -152,9 +164,20 @@
 				058C75681CBAC05100140535 /* UIUpdatesOnMain.swift */,
 				058C75771CBD0E7D00140535 /* MapViewDelegate.swift */,
 				057958801CB798B400D79492 /* TextFieldDelegate.swift */,
+				058C757C1CC0D91100140535 /* StyleConstants.swift */,
 				058C75751CBC9F9500140535 /* AlertController.swift */,
 			);
 			name = Util;
+			sourceTree = "<group>";
+		};
+		058C75841CC0E08B00140535 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				058C757E1CC0E08800140535 /* Roboto-Medium.ttf */,
+				058C757F1CC0E08800140535 /* Roboto-Regular.ttf */,
+				058C75801CC0E08800140535 /* Roboto-Thin.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,7 +238,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058C75811CC0E08800140535 /* Roboto-Medium.ttf in Resources */,
 				054A2E501C9935D400F33137 /* LaunchScreen.storyboard in Resources */,
+				058C75831CC0E08800140535 /* Roboto-Thin.ttf in Resources */,
+				058C75821CC0E08800140535 /* Roboto-Regular.ttf in Resources */,
 				054A2E4D1C9935D400F33137 /* Assets.xcassets in Resources */,
 				054A2E4B1C9935D400F33137 /* Main.storyboard in Resources */,
 			);
@@ -239,8 +265,10 @@
 				058C75761CBC9F9500140535 /* AlertController.swift in Sources */,
 				058C757B1CBD40F100140535 /* InformationPostingViewController.swift in Sources */,
 				058C75601CBAB0A200140535 /* UdacityClient.swift in Sources */,
+				058C75861CC0E48400140535 /* TextField.swift in Sources */,
 				058C75741CBC036D00140535 /* ParseConvenience.swift in Sources */,
 				058C756D1CBAC51900140535 /* BorderedButton.swift in Sources */,
+				058C757D1CC0D91100140535 /* StyleConstants.swift in Sources */,
 				058C75691CBAC05100140535 /* UIUpdatesOnMain.swift in Sources */,
 				058C75631CBAB16900140535 /* ParseClient.swift in Sources */,
 				054A2E5C1C9937E900F33137 /* ListViewController.swift in Sources */,
