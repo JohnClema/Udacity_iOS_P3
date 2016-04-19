@@ -63,7 +63,7 @@ class MapViewController : UIViewController {
         }
         ParseClient.sharedInstance().getStudentLocations(UdacityClient.sharedInstance().accountId!, completionHandlerForStudentLocations: { (success, studentLocations, error) in
             if success {
-                ParseClient.sharedInstance().studentLocations = studentLocations
+                StudentInformationModel.sharedInstance().studentlocations = studentLocations
                 performUIUpdatesOnMain {
                     self.activityIndicator!.stopAnimating()
                     self.addAnnotations()
@@ -79,8 +79,8 @@ class MapViewController : UIViewController {
     func addAnnotations() {
         self.mapView.removeAnnotations(self.mapView.annotations)
         var annotations = [MKPointAnnotation]()
-        if ParseClient.sharedInstance().studentLocations != nil {
-            let locations = ParseClient.sharedInstance().studentLocations
+        if StudentInformationModel.sharedInstance().studentlocations != nil {
+            let locations = StudentInformationModel.sharedInstance().studentlocations
             
             for location in locations! {
                 let lat = CLLocationDegrees(location.latitude.doubleValue)
@@ -111,7 +111,7 @@ class MapViewController : UIViewController {
             if success {
                 UdacityClient.sharedInstance().accountId = nil
                 UdacityClient.sharedInstance().sessionId = nil
-                ParseClient.sharedInstance().studentLocations = nil
+                StudentInformationModel.sharedInstance().studentlocations = nil
                 performUIUpdatesOnMain({ 
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
@@ -122,7 +122,7 @@ class MapViewController : UIViewController {
         //If user has posted a pin - present alertview with "overwrite" and "Cancel" options
         //TODO: Fix up the logic in this code
         var loggedinUser : StudentInformation?
-        for user in ParseClient.sharedInstance().studentLocations! {
+        for user in StudentInformationModel.sharedInstance().studentlocations! {
             if user.uniqueKey == UdacityClient.sharedInstance().accountId {
                 loggedinUser = user
                 break

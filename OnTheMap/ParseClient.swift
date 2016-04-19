@@ -15,8 +15,6 @@ class ParseClient : NSObject {
     var sessionId : String?
     var accountId : String?
     
-    var studentLocations : [StudentInformation]?
-    
     func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */

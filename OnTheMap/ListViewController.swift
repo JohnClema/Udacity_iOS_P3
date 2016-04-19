@@ -10,8 +10,6 @@ import UIKit
 
 class ListViewController : UIViewController {
     
-    var studentLocations = [StudentInformation]()
-    
     var activityIndicator : UIActivityIndicatorView?
 
     @IBOutlet weak var tableView: UITableView!
@@ -33,12 +31,10 @@ class ListViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if  (ParseClient.sharedInstance().studentLocations != nil) {
-            self.studentLocations = ParseClient.sharedInstance().studentLocations!
-        } else {
+        if  (StudentInformationModel.sharedInstance().studentlocations == nil) {
             ParseClient.sharedInstance().getStudentLocations(UdacityClient.sharedInstance().accountId!) { (success, studentLocations, error) in
                 if let studentLocations = studentLocations {
-                    self.studentLocations = studentLocations
+                    StudentInformationModel.sharedInstance().studentlocations = studentLocations
                     performUIUpdatesOnMain {
                         self.tableView.reloadData()
                     }
@@ -61,7 +57,7 @@ class ListViewController : UIViewController {
         }
         ParseClient.sharedInstance().getStudentLocations(UdacityClient.sharedInstance().accountId!, completionHandlerForStudentLocations: { (success, studentLocations, error) in
             if success {
-                ParseClient.sharedInstance().studentLocations = studentLocations
+                StudentInformationModel.sharedInstance().studentlocations = studentLocations
                 performUIUpdatesOnMain {
                     self.activityIndicator!.stopAnimating()
                     self.tableView.reloadData()
@@ -93,19 +89,39 @@ class ListViewController : UIViewController {
             if success {
                 UdacityClient.sharedInstance().accountId = nil
                 UdacityClient.sharedInstance().sessionId = nil
-                ParseClient.sharedInstance().studentLocations = nil
+                StudentInformationModel.sharedInstance().studentlocations = nil
                 performUIUpdatesOnMain({
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
         })
     }
+    
     func addUserPin() {
         //If user has posted a pin - present alertview with "overwrite" and "Cancel" options
-        //
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("InformationPostingController") as! InformationPostingViewController
-        presentViewController(controller, animated: true, completion: nil)
-        
+        //TODO: Fix up the logic in this code
+        var loggedinUser : StudentInformation?
+        for user in StudentInformationModel.sharedInstance().studentlocations! {
+            if user.uniqueKey == UdacityClient.sharedInstance().accountId {
+                loggedinUser = user
+                break
+            }
+        }
+        if loggedinUser != nil {
+            self.presentAlertControllerWithOverwrite("User \"\(loggedinUser!.firstName) \(loggedinUser!.lastName)\" has already posted a student location. Would you like to overwrite their location?", presentingController: self, overwriteAction: { (action) in
+                performUIUpdatesOnMain {
+                    self.presentInformationPostingController(loggedinUser)
+                }
+                }, completion: nil)
+        } else {
+            self.presentInformationPostingController(nil)
+        }
+    }
+    
+    func presentInformationPostingController(user: StudentInformation?) {
+        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingController") as! InformationPostingViewController
+        controller.user = user!
+        self.presentViewController(controller, animated: true, completion: nil)
     }
 
 }
@@ -116,7 +132,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         
         /* Get cell type */
         let cellReuseIdentifier = "locationCell"
-        let studentLocation = studentLocations[indexPath.row]
+        let studentLocation = StudentInformationModel.sharedInstance().studentlocations![indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
         
         /* Set cell defaults */
@@ -130,11 +146,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentLocations.count
+        return StudentInformationModel.sharedInstance().studentlocations!.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let mediaURL = studentLocations[indexPath.row].mediaURL
+        let mediaURL = StudentInformationModel.sharedInstance().studentlocations![indexPath.row].mediaURL
         UIApplication.sharedApplication().openURL(NSURL(string: mediaURL)!)
     }
     

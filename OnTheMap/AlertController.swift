@@ -22,7 +22,7 @@ extension UIViewController {
     func presentAlertControllerWithOverwrite(message: String, presentingController: UIViewController, overwriteAction:((UIAlertAction) -> Void)?, completion: (() -> Void)? ) {
         let alertController = UIAlertController(title: "", message: message, preferredStyle: .Alert)
         
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         let overwriteAction = UIAlertAction(title: "Overwrite", style: .Default, handler: overwriteAction)
         alertController.addAction(overwriteAction)
         alertController.addAction(defaultAction)
