@@ -1,5 +1,6 @@
-# Udacity iOS Nanodegree Project 3: On The Map app
+# Udacity iOS Nanodegree Project 3: On The Map App
 An iOS app that allows you to:
+
 1. Login using a Udacity email and password account
 2. Drop a pin for your location and tag it with a URL
 3. Look at other student locations pulled from a Parse API in a map or list
