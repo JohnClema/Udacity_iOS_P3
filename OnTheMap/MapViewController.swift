@@ -141,7 +141,9 @@ class MapViewController : UIViewController {
     
     func presentInformationPostingController(user: StudentInformation?) {
         let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingController") as! InformationPostingViewController
-        controller.user = user!
+        if let user = user {
+            controller.user = user
+        }
         self.presentViewController(controller, animated: true, completion: nil)
     }
 }

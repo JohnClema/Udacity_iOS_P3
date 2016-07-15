@@ -26,6 +26,8 @@ class InformationPostingViewController : UIViewController, UITextFieldDelegate {
     var user: StudentInformation?
     
     override func viewDidLoad() {
+        
+        
 
         self.locationTextField.attributedPlaceholder = NSAttributedString(string: "Enter your location here", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.linkTextField.attributedPlaceholder = NSAttributedString(string: "Enter a link to share", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
@@ -87,17 +89,19 @@ class InformationPostingViewController : UIViewController, UITextFieldDelegate {
         self.user?.longitude = (self.coords!.location?.coordinate.longitude)!
         self.user?.mediaURL = self.linkTextField.text!
         
-        ParseClient.sharedInstance().postUserLocation(user!, completionHandlerForLocationPost: { (success, error) in
-            if error != nil {
-                self.presentAlertController("Error", message: "Posting user location failed", presentingController: self, completion: nil)
-            } else {
-                if success {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                } else {
+        if let user = user {
+            ParseClient.sharedInstance().postUserLocation(user, completionHandlerForLocationPost: { (success, error) in
+                if error != nil {
                     self.presentAlertController("Error", message: "Posting user location failed", presentingController: self, completion: nil)
+                } else {
+                    if success {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    } else {
+                        self.presentAlertController("Error", message: "Posting user location failed", presentingController: self, completion: nil)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     //5. Post Data

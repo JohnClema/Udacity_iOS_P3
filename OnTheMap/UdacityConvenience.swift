@@ -9,7 +9,6 @@
 import Foundation
 
 extension UdacityClient {
-    
     func createSession(username: String, password: String, completionHandlerForSession: (success: Bool, accountID: String?, error: NSError?) -> Void) {
 
         let jsonBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
